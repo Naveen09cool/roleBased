@@ -32,6 +32,7 @@ const constants = {
     '/user/signup',
     '/user/verify',
     '/user/login',
+    '/admin/signup',
   ],
   limit:15,
   publicAccessToken:{
