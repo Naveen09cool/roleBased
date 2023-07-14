@@ -33,6 +33,9 @@ module.exports = function (sequelize, DataTypes) {
             type:DataTypes.BOOLEAN,
             defaultValue:false,
             allowNull:false
+        },
+        createdBy:{
+            type:DataTypes.INTEGER  
         }
       },
       {

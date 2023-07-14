@@ -29,3 +29,29 @@ module.exports.signUp = async (req , res ) => {
     })
   }
 }
+
+module.exports.createAgent = async (req , res ) => {
+    try{
+        const reqData = req.body
+        const reqUser = req.user
+        const validationData = common.validateSchema(reqData, schemas.createAgent);
+        if (validationData.length === 0 && reqUser.is_admin === true) {
+            const authDetails = await auth.userRegistration(reqData,reqUser)
+            res.status(constants.httpStatusCode.success).send({
+            code: constants.responseCodes.successfulOperation,
+            message: constants.messageKeys.en.msg_success,
+            data: authDetails
+          })
+        }else {
+          return res.status(constants.httpStatusCode.badRequest).send({
+              code: constants.responseCodes.revalidation,
+              message:validationData
+          })
+        }
+    }catch(error){ 
+    res.status(constants.responseCodes.failedOperation).send({
+    code: constants.responseCodes.failedOperation,
+    message: error.message
+    })
+  }
+}
