@@ -33,7 +33,7 @@ schemas.createAdmin = {
     }
 }
 
-schemas.createAgent = {
+schemas.createUser = {
     id: "createAgent",
     type:"object",
     properties : {
@@ -61,13 +61,42 @@ schemas.createAgent = {
             enum:[false],
             message:"is admin must be false"
         },
-        user_type: {
+        user_type_id: {
+            type:"number",
+            required:true,
+            message:"is user type must be a valid number"
+        },
+        parent: {
+            type:"number",
+            message:"is user type must be a valid number",
+            // required:true
+        }
+    }
+}
+
+schemas.createUserType = {
+    id: "createUserType",
+    type:"object",
+    properties : {
+        type_name: {
             type:"string",
             required:true,
-            enum:['agent'],
-            message:"is user type must be agent"
+            enum:['agent','site','store'],
+            message:"is user type must be agent or site or store"
         }
 
+    }
+}
+
+schemas.userById = {
+    id: "userById",
+    type:"object",
+    properties : {
+        id: {
+            type:"number",
+            required:true,
+            message:"Id be of type string"
+        }
     }
 }
 module.exports = schemas

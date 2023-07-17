@@ -25,7 +25,8 @@ const constants = {
       msg_session_expired:'User Session Expired', 
       msg_unauthorized_user:'UnAuthorized User',
       msg_data_already_exits:'Data Already Exist',
-      msg_ref_error: 'Reference Error'
+      msg_ref_error: 'Reference Error',
+      msg_usr_type_already_exits:'User Type Already Exist',
      }
    },
   publicAPI:[

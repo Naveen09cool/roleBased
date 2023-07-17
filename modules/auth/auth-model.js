@@ -6,9 +6,8 @@ const common = require('../../utils/common')
 /*For user Registration */
 exports.userRegistration = async (requestData,requestUser) => {
 try{
-    const hashed = await encryption.getEncryptedPassword(...requestData.password)
+    const hashed = await encryption.getEncryptedPassword(requestData.password)
     const createdBy = await (requestUser?.user_id) || null
-    console.log(createdBy,"ooooooooooooooo");
     const user = await sqlInstance.sequelize.models.users.create({
         ...requestData, 
         password : hashed.password + ':' + hashed.salt,
