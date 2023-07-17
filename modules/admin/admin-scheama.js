@@ -95,7 +95,27 @@ schemas.userById = {
         id: {
             type:"number",
             required:true,
-            message:"Id be of type string"
+            message:"Id be of type number"
+        }
+    },
+}
+
+schemas.listAllUser = {
+    id:"listAllUser",
+    type:"object",
+    properties: {
+        user_type_id: {
+            type:"number",
+            required:true,
+            message:"Id be of type number"
+        },
+        pageSize:{
+            type:"number",
+            message:"pageSize be of type number"
+        },
+        currentPage:{
+            type:"number",
+            message:"currentPage be of type number"
         }
     }
 }

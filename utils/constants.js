@@ -39,6 +39,10 @@ const constants = {
   publicAccessToken:{
     token:'3ls20684-3fb7-9327-8392-3ps920t92746'
   },
+  pagination:{
+    deafultPageSize:1000,
+    defaultCurrentPage : 1
+  }
 }
 
 module.exports = constants

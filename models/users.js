@@ -32,8 +32,12 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
     },
     parent: {
-      type: DataTypes.INTEGER
-    }
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'users',
+        key: 'user_id',
+      },
+    },
   });
 
   users.associate = function (models) {
@@ -41,6 +45,16 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: 'user_type_id',
       as: 'user_type',
     });
+
+    users.belongsTo(models.users, {
+      foreignKey:'parent',
+      as: 'parent_id',
+    });
+
+    // users.hasMany(models.users,{
+    //   as:'parent_id',
+    //   foreignKey:'user_id'
+    // })
   };
 
   return users;

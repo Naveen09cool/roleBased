@@ -88,6 +88,7 @@ module.exports.listAllUser = async (req , res ) => {
     try{
         const reqData = req.body
         const reqUser = req.user
+        const validationData = common.validateSchema(reqData, schemas.listAllUser);
         if (reqUser.is_admin === true) {
             const authDetails = await admin.listAllUser(reqData)
             res.status(constants.httpStatusCode.success).send({
