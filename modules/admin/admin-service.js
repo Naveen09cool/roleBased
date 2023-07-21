@@ -34,7 +34,6 @@ module.exports.createUser = async (req , res ) => {
     try{
         const reqData = req.body
         const reqUser = req.user
-        console.log(reqUser,'::::::::::');
         const validationData = common.validateSchema(reqData, schemas.createUser);
         if (validationData.length === 0 && reqUser.is_admin === true) {
             const authDetails = await auth.userRegistration(reqData,reqUser)
@@ -84,13 +83,13 @@ module.exports.createUserType = async (req , res ) => {
 }
 }
 
-module.exports.listAllUser = async (req , res ) => {
+module.exports.listUserByType = async (req , res ) => {
     try{
         const reqData = req.body
         const reqUser = req.user
-        const validationData = common.validateSchema(reqData, schemas.listAllUser);
+        const validationData = common.validateSchema(reqData, schemas.listUserByType);
         if (reqUser.is_admin === true) {
-            const authDetails = await admin.listAllUser(reqData)
+            const authDetails = await admin.listUserByType(reqData)
             res.status(constants.httpStatusCode.success).send({
             code: constants.responseCodes.successfulOperation,
             message: constants.messageKeys.en.msg_success,

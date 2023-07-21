@@ -28,34 +28,30 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: false,
       allowNull: false,
     },
+    user_type: {
+      type: DataTypes.ENUM('agentUser', 'siteUser', 'storeUser', 'adminUser'),
+      defaultValue: 'agentUser'
+    },
     createdBy: {
       type: DataTypes.INTEGER,
     },
-    parent: {
+    updatedBy: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'users',
-        key: 'user_id',
-      },
-    },
+    }
   });
 
   users.associate = function (models) {
-    users.belongsTo(models.userTypes, {
-      foreignKey: 'user_type_id',
-      as: 'user_type',
+    users.hasMany(models.agentSites, {
+      foreignKey:'agent_id',
+      sourceKey:'user_id',
+      as: 'agent',
     });
-
-    users.belongsTo(models.users, {
-      foreignKey:'parent',
-      as: 'parent_id',
-    });
-
-    // users.hasMany(models.users,{
-    //   as:'parent_id',
-    //   foreignKey:'user_id'
-    // })
   };
-
-  return users;
+  return users
 };
+
+// users.hasMany(models.siteStores, {
+    //   foreignKey:'user_id',
+    //   targetKey:'_id',
+    //   as: 'siteStore',
+    // })

@@ -8,8 +8,10 @@ module.exports = function(app){
 
     app.post('/admin/create_user_type',service.createUserType),
 
-    app.get('/admin/list_user', service.listAllUser),
+    app.get('/admin/list_user', service.listUserByType),
 
     app.get('/admin/id', service.userById)
+
+    // app.get('/admin/child_id', service.)
 
 }

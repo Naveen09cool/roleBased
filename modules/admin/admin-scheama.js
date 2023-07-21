@@ -29,6 +29,12 @@ schemas.createAdmin = {
             required:true,
             enum:[true],
             message:"is admin must be true"
+        },
+        user_type:{
+            type:"enum",
+            required:true,
+            enum: ['adminUser'],
+            message:"user_type must be from predefined enums"
         }
     }
 }
@@ -61,15 +67,15 @@ schemas.createUser = {
             enum:[false],
             message:"is admin must be false"
         },
-        user_type_id: {
-            type:"number",
+        user_type:{
+            type:"enum",
             required:true,
-            message:"is user type must be a valid number"
+            enum: ['agentUser', 'siteUser', 'storeUser'],
+            message:"user_type must be from predefined enums"
         },
-        parent: {
+        parent_id: {
             type:"number",
             message:"is user type must be a valid number",
-            // required:true
         }
     }
 }
@@ -100,14 +106,15 @@ schemas.userById = {
     },
 }
 
-schemas.listAllUser = {
-    id:"listAllUser",
+schemas.listUserByType = {
+    id:"listUserByType",
     type:"object",
     properties: {
-        user_type_id: {
-            type:"number",
+        user_type: {
+            type:"string",
             required:true,
-            message:"Id be of type number"
+            enum:['agentUser', 'siteUser', 'storeUser'],
+            message:"Id be from pre-defined type"
         },
         pageSize:{
             type:"number",

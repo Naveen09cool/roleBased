@@ -4,32 +4,17 @@ const encryption = require('../../utils/encryption')
 const constants = require('../../utils/constants')
 const common = require('../../utils/common')
 
-exports.listAllUser = async (reqData) => {
+exports.listUserByType = async (reqData) => {
 try{
     const pageSize = reqData.pageSize || constants.pagination.deafultPageSize ;
     const currentPage = reqData.currentPage || constants.pagination.defaultCurrentPage ;
     const offset = (currentPage - 1) * pageSize;
-    const type_id = reqData.user_type_id;
+    const userType = reqData.user_type;
     const user = await sqlInstance.sequelize.models.users.findAndCountAll({
         where: {
             is_admin: false,
-            user_type_id:type_id,
-            user_id:7
+            user_type:userType,
         },
-        include: [
-            { 
-                model: sqlInstance.sequelize.models.users,
-                as: 'parent_id',
-                nestedJoins: true,
-                include: [
-                    { 
-                        model: sqlInstance.sequelize.models.users,
-                        as: 'parent_id',
-                        nestedJoins: true,
-                    },
-                ],
-            },
-        ],
         limit:pageSize,
         offset:offset,
     })  
@@ -60,27 +45,19 @@ exports.createUserType = async (requestData) => {
 exports.userById = async (requestData) => {
     try{
         const id = requestData.id
-        const agents = await sqlInstance.sequelize.models.users.findOne({
+        let user = await sqlInstance.sequelize.models.users.findOne({
             where: {
                 is_admin: false,
                 user_id: id
             },
-            include: [
+            include:  [
                 { 
-                    model: sqlInstance.sequelize.models.users,
-                    as: 'parent_id',
-                    nestedJoins: true,
-                    include: [
-                        { 
-                            model: sqlInstance.sequelize.models.users,
-                            as: 'parent_id',
-                            nestedJoins: true,
-                        },
-                    ],
-                },
+                    model: sqlInstance.sequelize.models.agentSites,
+                    as: 'agent',
+                }
             ],
-        })   
-        return agents
+        })
+        return user
         }catch(error){
             if(error.name.toLowerCase() === 'sequelizeuniqueconstrainterror'){
                 throw new Error(constants.messageKeys.en.msg_usr_already_exits)
@@ -88,3 +65,34 @@ exports.userById = async (requestData) => {
             throw new Error(error)
         }
     }
+
+
+    // exports.userByIde = async (requestData) => {
+    //     try{
+    //         const id = requestData.id
+    //         let parent, child;
+    //         let user = await sqlInstance.sequelize.models.users.findOne({
+    //             where: {
+    //                 is_admin: false,
+    //                 user_id: id
+    //             },
+    //         })
+    //         const agent = await sqlInstance.sequelize.models.agentSites.findOne({
+    //             where:{
+    //                 site_id:user.user_id
+    //             },
+    //         })
+    //         if(agent){
+    //             parent = await sqlInstance.sequelize.models.users.findOne({
+    //             where:{
+    //                 user_id: agent.agent_id
+    //             }})
+    //         }
+    //         return {user,parent}
+    //         }catch(error){
+    //             if(error.name.toLowerCase() === 'sequelizeuniqueconstrainterror'){
+    //                 throw new Error(constants.messageKeys.en.msg_usr_already_exits)
+    //             }
+    //             throw new Error(error)
+    //         }
+    //     }
