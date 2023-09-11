@@ -1,0 +1,11 @@
+[
+    {
+        "testData": "JohnJSON",
+        "testNumb": 100,
+        "testDel": "justToDelete"
+    },{
+        "testData": "John22JSON",
+        "testNumb": 10022,
+        "testDel": "justToDelete22"
+    }
+]
