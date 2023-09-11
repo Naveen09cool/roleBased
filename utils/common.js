@@ -40,7 +40,7 @@ exports.validateSchema = function(object , schema){
     const errors = _validator.validate(object , schema).errors
     if(errors.length >0){
         return errors.map((error) => {
-        return error.schema.message
+        return {property:error.property, message: error.message}
     })
     }
     return errors
